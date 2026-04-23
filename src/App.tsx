@@ -32,6 +32,8 @@ const API_FALLBACK_URL = (import.meta.env.VITE_API_FALLBACK_URL ?? 'http://local
   '',
 )
 const ORDEN_CATEGORIAS = ['Desayuno', 'Almuerzo', 'Comida rapida', 'Cena']
+const FECHA_RESPALDO = '2026-04-23T00:00:00.000Z'
+const ES_GITHUB_PAGES = typeof window !== 'undefined' && window.location.hostname.endsWith('github.io')
 
 const RECETA_MEDIA: Record<string, RecetaMedia> = {
   'Arroz con huevo y alinos': {
@@ -119,6 +121,225 @@ const CATEGORIA_MEDIA: Record<string, RecetaMedia> = {
   },
 }
 
+const RECETAS_RESPALDO: Receta[] = [
+  {
+    id: 1,
+    nombre: 'Arroz con huevo y alinos',
+    descripcion: 'Receta sencilla para un desayuno rapido con arroz, huevo y alinos basicos.',
+    ingredientes: ['Arroz cocido', 'Huevos', 'Cebolla', 'Tomate', 'Sal'],
+    pasos: [
+      'Picar la cebolla y el tomate.',
+      'Hacer un guiso corto con los alinos.',
+      'Freir los huevos.',
+      'Servir el arroz con el guiso y los huevos encima.',
+    ],
+    tiempoMinutos: 15,
+    porciones: 2,
+    categoria: 'Desayuno',
+    dificultad: 'FACIL',
+    destacada: true,
+    fechaCreacion: FECHA_RESPALDO,
+    fechaActualizacion: FECHA_RESPALDO,
+  },
+  {
+    id: 2,
+    nombre: 'Pastas con queso',
+    descripcion: 'Pasta cremosa y rapida con queso derretido para almuerzo o cena.',
+    ingredientes: ['Pasta', 'Queso mozzarella', 'Mantequilla', 'Leche', 'Sal'],
+    pasos: [
+      'Cocinar la pasta.',
+      'Derretir mantequilla con leche.',
+      'Agregar el queso y mezclar.',
+      'Unir la salsa con la pasta.',
+    ],
+    tiempoMinutos: 25,
+    porciones: 3,
+    categoria: 'Almuerzo',
+    dificultad: 'FACIL',
+    destacada: true,
+    fechaCreacion: FECHA_RESPALDO,
+    fechaActualizacion: FECHA_RESPALDO,
+  },
+  {
+    id: 3,
+    nombre: 'Torta de pescado',
+    descripcion: 'Torta salada de pescado ideal para un almuerzo casero.',
+    ingredientes: ['Filete de pescado', 'Papa cocida', 'Huevos', 'Pan rallado', 'Cebolla'],
+    pasos: [
+      'Cocinar y desmenuzar el pescado.',
+      'Mezclar con papa, huevo y cebolla.',
+      'Dar forma a la torta.',
+      'Hornear hasta dorar.',
+    ],
+    tiempoMinutos: 45,
+    porciones: 4,
+    categoria: 'Almuerzo',
+    dificultad: 'MEDIA',
+    destacada: true,
+    fechaCreacion: FECHA_RESPALDO,
+    fechaActualizacion: FECHA_RESPALDO,
+  },
+  {
+    id: 4,
+    nombre: 'Hamburguesa doble carne',
+    descripcion: 'Hamburguesa casera con doble porcion de carne y queso.',
+    ingredientes: ['Pan hamburguesa', 'Carne molida', 'Queso', 'Lechuga', 'Tomate'],
+    pasos: [
+      'Formar dos carnes delgadas.',
+      'Cocinar la carne en plancha.',
+      'Armar la hamburguesa con pan, vegetales y queso.',
+      'Servir caliente.',
+    ],
+    tiempoMinutos: 35,
+    porciones: 2,
+    categoria: 'Comida rapida',
+    dificultad: 'MEDIA',
+    destacada: true,
+    fechaCreacion: FECHA_RESPALDO,
+    fechaActualizacion: FECHA_RESPALDO,
+  },
+  {
+    id: 5,
+    nombre: 'Salchipapas mixta',
+    descripcion: 'Plato rapido con papas fritas, salchicha y salsa.',
+    ingredientes: ['Papas', 'Salchichas', 'Queso rallado', 'Salsa de tomate', 'Mayonesa'],
+    pasos: [
+      'Cortar y freir las papas.',
+      'Cocinar las salchichas.',
+      'Mezclar todo en una bandeja.',
+      'Agregar salsas y queso al final.',
+    ],
+    tiempoMinutos: 20,
+    porciones: 2,
+    categoria: 'Comida rapida',
+    dificultad: 'FACIL',
+    destacada: true,
+    fechaCreacion: FECHA_RESPALDO,
+    fechaActualizacion: FECHA_RESPALDO,
+  },
+  {
+    id: 6,
+    nombre: 'Arepa con huevo',
+    descripcion: 'Desayuno tradicional con arepa caliente y huevo frito.',
+    ingredientes: ['Arepas', 'Huevos', 'Aceite', 'Sal'],
+    pasos: ['Calentar las arepas.', 'Freir los huevos.', 'Servir la arepa con el huevo encima.'],
+    tiempoMinutos: 12,
+    porciones: 2,
+    categoria: 'Desayuno',
+    dificultad: 'FACIL',
+    destacada: false,
+    fechaCreacion: FECHA_RESPALDO,
+    fechaActualizacion: FECHA_RESPALDO,
+  },
+  {
+    id: 7,
+    nombre: 'Omelette de jamon y queso',
+    descripcion: 'Opcion ligera y rapida para desayuno.',
+    ingredientes: ['Huevos', 'Jamon', 'Queso', 'Mantequilla', 'Sal'],
+    pasos: [
+      'Batir los huevos.',
+      'Agregar jamon y queso.',
+      'Cocinar en sarten con mantequilla.',
+      'Doblar y servir.',
+    ],
+    tiempoMinutos: 10,
+    porciones: 1,
+    categoria: 'Desayuno',
+    dificultad: 'FACIL',
+    destacada: false,
+    fechaCreacion: FECHA_RESPALDO,
+    fechaActualizacion: FECHA_RESPALDO,
+  },
+  {
+    id: 8,
+    nombre: 'Pollo guisado con arroz',
+    descripcion: 'Almuerzo completo con pollo sazonado y arroz blanco.',
+    ingredientes: ['Pollo', 'Arroz', 'Cebolla', 'Tomate', 'Ajo'],
+    pasos: [
+      'Preparar el guiso con cebolla, tomate y ajo.',
+      'Agregar el pollo y cocinar.',
+      'Acompanarlo con arroz blanco.',
+    ],
+    tiempoMinutos: 50,
+    porciones: 4,
+    categoria: 'Almuerzo',
+    dificultad: 'MEDIA',
+    destacada: false,
+    fechaCreacion: FECHA_RESPALDO,
+    fechaActualizacion: FECHA_RESPALDO,
+  },
+  {
+    id: 9,
+    nombre: 'Sandwich de pollo',
+    descripcion: 'Receta practica para una comida rapida o cena ligera.',
+    ingredientes: ['Pan tajado', 'Pollo desmechado', 'Queso', 'Lechuga', 'Mayonesa'],
+    pasos: [
+      'Tostar el pan.',
+      'Mezclar el pollo con mayonesa.',
+      'Armar el sandwich con queso y lechuga.',
+    ],
+    tiempoMinutos: 15,
+    porciones: 2,
+    categoria: 'Comida rapida',
+    dificultad: 'FACIL',
+    destacada: false,
+    fechaCreacion: FECHA_RESPALDO,
+    fechaActualizacion: FECHA_RESPALDO,
+  },
+  {
+    id: 10,
+    nombre: 'Ensalada de atun',
+    descripcion: 'Cena fresca con vegetales y atun.',
+    ingredientes: ['Atun', 'Lechuga', 'Tomate', 'Maiz', 'Limon'],
+    pasos: ['Picar los vegetales.', 'Agregar el atun y el maiz.', 'Condimentar con limon y sal.'],
+    tiempoMinutos: 10,
+    porciones: 2,
+    categoria: 'Cena',
+    dificultad: 'FACIL',
+    destacada: false,
+    fechaCreacion: FECHA_RESPALDO,
+    fechaActualizacion: FECHA_RESPALDO,
+  },
+  {
+    id: 11,
+    nombre: 'Sopa de verduras',
+    descripcion: 'Sopa casera y nutritiva para almuerzo o cena.',
+    ingredientes: ['Zanahoria', 'Papa', 'Apio', 'Cebolla', 'Caldo'],
+    pasos: [
+      'Picar las verduras.',
+      'Llevar al caldo caliente.',
+      'Cocinar hasta que esten blandas.',
+      'Servir caliente.',
+    ],
+    tiempoMinutos: 30,
+    porciones: 4,
+    categoria: 'Cena',
+    dificultad: 'MEDIA',
+    destacada: false,
+    fechaCreacion: FECHA_RESPALDO,
+    fechaActualizacion: FECHA_RESPALDO,
+  },
+  {
+    id: 12,
+    nombre: 'Empanadas caseras',
+    descripcion: 'Empanadas doradas rellenas de carne y papa.',
+    ingredientes: ['Masa para empanadas', 'Carne molida', 'Papa', 'Cebolla', 'Aceite'],
+    pasos: [
+      'Preparar el relleno.',
+      'Rellenar la masa.',
+      'Cerrar bien las empanadas.',
+      'Freir hasta dorar.',
+    ],
+    tiempoMinutos: 40,
+    porciones: 6,
+    categoria: 'Comida rapida',
+    dificultad: 'MEDIA',
+    destacada: true,
+    fechaCreacion: FECHA_RESPALDO,
+    fechaActualizacion: FECHA_RESPALDO,
+  },
+]
+
 function ordenarCategorias(categorias: string[]) {
   const unicas = [...new Set(categorias.filter(Boolean))]
   const ordenadas = ORDEN_CATEGORIAS.filter((categoria) => unicas.includes(categoria))
@@ -141,6 +362,15 @@ function obtenerMedia(receta: Receta) {
       accent: '#80503a',
     }
   )
+}
+
+function obtenerDatosRespaldo() {
+  return {
+    recetas: RECETAS_RESPALDO,
+    categorias: ordenarCategorias(RECETAS_RESPALDO.map((receta) => receta.categoria)),
+    destacadas: RECETAS_RESPALDO.filter((receta) => receta.destacada),
+    rapidas: RECETAS_RESPALDO.filter((receta) => receta.tiempoMinutos <= 20),
+  }
 }
 
 async function pedirJson<T>(ruta: string) {
@@ -181,6 +411,18 @@ function App() {
       setEstado('loading')
       setError('')
 
+      if (ES_GITHUB_PAGES) {
+        const respaldo = obtenerDatosRespaldo()
+
+        setRecetas(respaldo.recetas)
+        setCategorias(respaldo.categorias)
+        setDestacadas(respaldo.destacadas)
+        setRapidas(respaldo.rapidas)
+        setRecetaAbiertaId(respaldo.recetas[0]?.id ?? null)
+        setEstado('ready')
+        return
+      }
+
       try {
         const [dataRecetas, dataCategorias, dataDestacadas, dataRapidas] = await Promise.all([
           pedirJson<Receta[]>(''),
@@ -204,8 +446,15 @@ function App() {
           return
         }
 
-        setEstado('error')
-        setError(errorCargando instanceof Error ? errorCargando.message : 'Paso algo raro cargando las recetas')
+        const respaldo = obtenerDatosRespaldo()
+
+        setRecetas(respaldo.recetas)
+        setCategorias(respaldo.categorias)
+        setDestacadas(respaldo.destacadas)
+        setRapidas(respaldo.rapidas)
+        setRecetaAbiertaId(respaldo.recetas[0]?.id ?? null)
+        setEstado('ready')
+        setError(errorCargando instanceof Error ? errorCargando.message : '')
       }
     }
 
